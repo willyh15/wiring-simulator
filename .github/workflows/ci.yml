@@ -22,7 +22,7 @@ jobs:
     - name: Install Dependencies
       run: npm install
 
-    - name: Lint Code with Fixes
+    - name: Run Linting
       run: npm run lint -- --fix
 
     - name: Build Project
@@ -33,3 +33,7 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./
+        destination_dir: "."
+
+        # Handle first deployment when gh-pages branch does not exist
+        enable_jekyll: false
