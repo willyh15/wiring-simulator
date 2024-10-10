@@ -1,8 +1,24 @@
-// Handle Drag-and-Drop for Components
+// Store the existing connections
 const components = document.querySelectorAll(".component");
 const canvas = document.getElementById("wiring-canvas");
+const wireButtons = document.querySelectorAll(".wire-type");
 
-// Updated Compatibility Map with New Components
+// Store selected wire type (default: red)
+let selectedWireType = "red";
+
+// Track selected paths and circuits
+let highlightedPaths = [];
+
+// Set up wire type selection
+wireButtons.forEach(button => {
+    button.addEventListener("click", () => {
+        selectedWireType = button.id.split("-")[0];
+        wireButtons.forEach(btn => btn.style.outline = "none");
+        button.style.outline = "2px solid blue";  // Highlight selected button
+    });
+});
+
+// Compatibility Map and Connections
 const compatibilityMap = {
     "solenoid": ["ignition-key", "stator", "starter-motor"],
     "ignition-key": ["solenoid", "starter-motor"],
@@ -14,10 +30,8 @@ const compatibilityMap = {
     "starter-motor": ["battery", "solenoid", "ignition-key"]
 };
 
-// Store connected components and their connections
 const connections = [];
 
-// Add drag and drop event listeners
 components.forEach(component => {
     component.addEventListener("dragstart", handleDragStart);
 });
@@ -40,41 +54,42 @@ function handleDrop(event) {
     component.style.position = "absolute";
     component.style.left = `${event.offsetX}px`;
     component.style.top = `${event.offsetY}px`;
-    component.classList.add("canvas-component");  // Add a class to identify placed components
-    component.setAttribute("data-type", id);  // Store component type for compatibility checks
+    component.classList.add("canvas-component");
+    component.setAttribute("data-type", id);
     canvas.appendChild(component);
 
-    // Allow connections between compatible components
-    component.addEventListener("click", () => initiateConnection(component));
+    const terminals = component.querySelectorAll(".terminal");
+    terminals.forEach(terminal => {
+        terminal.addEventListener("click", () => initiateConnection(terminal));
+    });
+
+    // Add path highlighting for the newly placed component
+    component.addEventListener("click", () => highlightPaths(component));
 }
 
-function initiateConnection(component) {
-    // Select a component to connect with the clicked component
-    if (canvas.querySelector(".selected")) {
-        const selected = canvas.querySelector(".selected");
-        const fromType = selected.getAttribute("data-type");
-        const toType = component.getAttribute("data-type");
+function initiateConnection(terminal) {
+    if (canvas.querySelector(".selected-terminal")) {
+        const selected = canvas.querySelector(".selected-terminal");
+        const fromType = selected.parentElement.getAttribute("data-type");
+        const toType = terminal.parentElement.getAttribute("data-type");
 
-        // Check compatibility
         if (fromType !== toType && compatibilityMap[fromType]?.includes(toType)) {
-            createConnection(selected, component);
+            createConnection(selected, terminal);
         } else {
             alert("Incompatible components! Cannot connect.");
         }
-        selected.classList.remove("selected");
+        selected.classList.remove("selected-terminal");
     } else {
-        component.classList.add("selected");
+        terminal.classList.add("selected-terminal");
     }
 }
 
-function createConnection(fromComponent, toComponent) {
-    // Draw a visual line between components
+function createConnection(fromTerminal, toTerminal) {
     const line = document.createElement("div");
-    line.classList.add("connection-line");
+    line.classList.add("connection-line", selectedWireType);  // Apply wire type
 
-    // Set position and dimensions
-    const fromRect = fromComponent.getBoundingClientRect();
-    const toRect = toComponent.getBoundingClientRect();
+    const fromRect = fromTerminal.getBoundingClientRect();
+    const toRect = toTerminal.getBoundingClientRect();
     const canvasRect = canvas.getBoundingClientRect();
 
     const x1 = fromRect.left - canvasRect.left + fromRect.width / 2;
@@ -89,6 +104,41 @@ function createConnection(fromComponent, toComponent) {
 
     canvas.appendChild(line);
 
-    // Store the connection
-    connections.push({ from: fromComponent.id, to: toComponent.id });
+    connections.push({ from: fromTerminal.id, to: toTerminal.id, wireType: selectedWireType });
+
+    // Validate the circuit after each connection
+    validateCircuit();
+}
+
+function highlightPaths(component) {
+    // Clear previous highlights
+    clearHighlights();
+
+    // Find all connections starting from this component
+    const componentId = component.id;
+    const connectedPaths = connections.filter(conn => conn.from.includes(componentId) || conn.to.includes(componentId));
+
+    // Highlight all connected paths
+    connectedPaths.forEach(path => {
+        const line = document.querySelector(`.connection-line[data-id="${path.from}-${path.to}"]`);
+        if (line) {
+            line.style.outline = "3px solid blue";
+            highlightedPaths.push(line);
+        }
+    });
+}
+
+function clearHighlights() {
+    highlightedPaths.forEach(path => path.style.outline = "none");
+    highlightedPaths = [];
+}
+
+function validateCircuit() {
+    // Check if there are any completed circuits (battery connected to a motor, for example)
+    const battery = connections.find(conn => conn.from.includes("battery") || conn.to.includes("battery"));
+    const motor = connections.find(conn => conn.from.includes("starter-motor") || conn.to.includes("starter-motor"));
+
+    if (battery && motor) {
+        alert("Complete Circuit Detected!");
+    }
 }
