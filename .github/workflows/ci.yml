@@ -31,7 +31,7 @@ jobs:
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
-        personal_token: ${{ secrets.ACTIONS_DEPLOY_KEY }}  # Change from github_token to personal_token
+        personal_token: ${{ secrets.ACTIONS_DEPLOY_KEY }}  # Reference the custom secret
         publish_dir: ./
         destination_dir: "."
         enable_jekyll: false
