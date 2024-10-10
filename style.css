@@ -26,6 +26,17 @@ h1 {
     cursor: grab;
 }
 
+.canvas-component.selected {
+    border-color: green;
+}
+
+.connection-line {
+    position: absolute;
+    height: 2px;
+    background-color: red;
+    transform-origin: 0 0;
+}
+
 #wiring-canvas {
     border: 2px dashed #aaa;
     height: 400px;
