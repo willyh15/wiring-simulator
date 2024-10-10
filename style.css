@@ -1,0 +1,45 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    text-align: center;
+}
+
+.components, .canvas {
+    display: inline-block;
+    vertical-align: top;
+    width: 45%;
+    margin: 20px;
+}
+
+#component-container {
+    border: 1px solid #ddd;
+    padding: 10px;
+}
+
+.component {
+    margin: 5px;
+    padding: 10px;
+    border: 1px solid #333;
+    background-color: #f3f3f3;
+    cursor: grab;
+}
+
+.canvas-component.selected {
+    border-color: green;
+}
+
+.connection-line {
+    position: absolute;
+    height: 2px;
+    background-color: red;
+    transform-origin: 0 0;
+}
+
+#wiring-canvas {
+    border: 2px dashed #aaa;
+    height: 400px;
+    width: 100%;
+    position: relative;
+}

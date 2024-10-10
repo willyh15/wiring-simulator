@@ -1,0 +1,19 @@
+{
+  "name": "wiring-simulator",
+  "version": "1.0.0",
+  "description": "Drag-and-drop wiring simulator for learning component connections.",
+  "main": "index.html",
+  "scripts": {
+    "start": "live-server",
+    "lint": "eslint .",
+    "build": "echo 'Build successful!'",
+    "test": "echo 'Test cases run here!'"
+  },
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "live-server": "^1.2.1"
+  }
+}

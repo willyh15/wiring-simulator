@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wiring Simulator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Wiring Simulator</h1>
+    <div class="components">
+        <h2>Components</h2>
+        <div id="component-container">
+            <div class="component" draggable="true" id="solenoid">Solenoid</div>
+            <div class="component" draggable="true" id="ignition-key">Ignition Key</div>
+            <div class="component" draggable="true" id="stator">Stator</div>
+            <div class="component" draggable="true" id="coil">Coil</div>
+            <div class="component" draggable="true" id="voltage-regulator">Voltage Regulator</div>
+            <div class="component" draggable="true" id="cdi">CDI</div>
+            <!-- New Components -->
+            <div class="component" draggable="true" id="battery">Battery</div>
+            <div class="component" draggable="true" id="starter-motor">Starter Motor</div>
+        </div>
+    </div>
+
+    <div class="canvas">
+        <h2>Canvas</h2>
+        <div id="wiring-canvas">
+            <!-- Drop area for components -->
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
