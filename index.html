@@ -17,10 +17,24 @@
             <div class="component" draggable="true" id="coil">Coil</div>
             <div class="component" draggable="true" id="voltage-regulator">Voltage Regulator</div>
             <div class="component" draggable="true" id="cdi">CDI</div>
-            <!-- New Components -->
-            <div class="component" draggable="true" id="battery">Battery</div>
-            <div class="component" draggable="true" id="starter-motor">Starter Motor</div>
+            <div class="component" draggable="true" id="battery">
+                Battery
+                <div class="terminal" id="battery-pos" data-terminal="positive">+</div>
+                <div class="terminal" id="battery-neg" data-terminal="negative">-</div>
+            </div>
+            <div class="component" draggable="true" id="starter-motor">
+                Starter Motor
+                <div class="terminal" id="starter-pos" data-terminal="positive">In</div>
+                <div class="terminal" id="starter-out" data-terminal="negative">Out</div>
+            </div>
         </div>
+    </div>
+
+    <div class="controls">
+        <h2>Wire Type Selector</h2>
+        <button class="wire-type" id="red-wire" style="background-color: red;">Red</button>
+        <button class="wire-type" id="black-wire" style="background-color: black;">Black</button>
+        <button class="wire-type" id="yellow-wire" style="background-color: yellow;">Yellow</button>
     </div>
 
     <div class="canvas">
