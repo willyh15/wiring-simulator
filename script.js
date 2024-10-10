@@ -2,14 +2,16 @@
 const components = document.querySelectorAll(".component");
 const canvas = document.getElementById("wiring-canvas");
 
-// Compatibility Map: Defines which components can connect to each other
+// Updated Compatibility Map with New Components
 const compatibilityMap = {
-    "solenoid": ["ignition-key", "stator"],
-    "ignition-key": ["solenoid"],
+    "solenoid": ["ignition-key", "stator", "starter-motor"],
+    "ignition-key": ["solenoid", "starter-motor"],
     "stator": ["voltage-regulator", "coil"],
     "coil": ["cdi", "voltage-regulator"],
-    "voltage-regulator": ["stator", "coil"],
-    "cdi": ["coil"]
+    "voltage-regulator": ["stator", "coil", "battery"],
+    "cdi": ["coil"],
+    "battery": ["starter-motor", "voltage-regulator"],
+    "starter-motor": ["battery", "solenoid", "ignition-key"]
 };
 
 // Store connected components and their connections
