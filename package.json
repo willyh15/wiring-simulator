@@ -4,9 +4,9 @@
   "description": "Drag-and-drop wiring simulator for learning component connections.",
   "main": "index.html",
   "scripts": {
-    "start": "live-server",  // Starts a local development server
-    "lint": "eslint .",       // Lint the JavaScript files
-    "build": "echo 'Build successful!'",  // Dummy build script (update later)
+    "start": "live-server",
+    "lint": "eslint .",
+    "build": "echo 'Build successful!'",
     "test": "echo 'Test cases run here!'"
   },
   "author": "Your Name",
