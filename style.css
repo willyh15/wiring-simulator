@@ -6,10 +6,10 @@ h1 {
     text-align: center;
 }
 
-.components, .canvas {
+.components, .controls, .canvas {
     display: inline-block;
     vertical-align: top;
-    width: 45%;
+    width: 30%;
     margin: 20px;
 }
 
@@ -30,11 +30,30 @@ h1 {
     border-color: green;
 }
 
+.terminal {
+    border: 1px solid #666;
+    display: inline-block;
+    padding: 5px;
+    margin: 2px;
+    cursor: pointer;
+}
+
 .connection-line {
     position: absolute;
     height: 2px;
-    background-color: red;
     transform-origin: 0 0;
+}
+
+.connection-line.red {
+    background-color: red;
+}
+
+.connection-line.black {
+    background-color: black;
+}
+
+.connection-line.yellow {
+    background-color: yellow;
 }
 
 #wiring-canvas {
@@ -42,4 +61,12 @@ h1 {
     height: 400px;
     width: 100%;
     position: relative;
+}
+
+.wire-type {
+    padding: 10px;
+    margin: 5px;
+    cursor: pointer;
+    color: white;
+    border: none;
 }
